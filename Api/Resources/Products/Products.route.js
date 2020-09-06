@@ -4,6 +4,7 @@ const uuidv4 = require("uuid/v4");
 const products = require("../../../Database").products;
 const validateProduct = require("./Products.validate");
 const productsRouter = express.Router();
+const Logger = require('../../../Utils/Logger')
 
 productsRouter.get("/", (req, res) => {
   res.json(products);
@@ -14,6 +15,7 @@ productsRouter.post("/", validateProduct, (req, res) => {
 
   newProduct.id = uuidv4();
   products.push(newProduct);
+  Logger.info("Producto agregado a la coleccion productos", newProduct)
   res.status(201).json(newProduct);
 });
 
@@ -38,6 +40,7 @@ productsRouter.put("/:id", validateProduct, (req, res) => {
   if (indice != -1) {
     newData.id = id;
     products[indice] = newData;
+    Logger.info(`Product with id [${id}] has been update with`,newData)
     res.status(200).json(products[indice]);
     return;
   } else {
@@ -51,6 +54,7 @@ productsRouter.delete("/:id", (req, res) => {
     return product.id == req.params.id;
   });
   if (toDelete === -1) {
+    Logger.warn(`Product with id[${req.params.id}] dont exist. Nothing to delete`);
     res.status(404).send("No existe ese producto, no se puede borrar");
     return;
   }

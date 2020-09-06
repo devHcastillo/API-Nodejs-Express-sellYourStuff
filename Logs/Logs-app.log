@@ -1,0 +1,65 @@
+info: 2020-09-06T01:31:00.594Z Listening from Port 3000
+info: 2020-09-06T01:31:08.527Z ::ffff:127.0.0.1 - GET /products HTTP/1.1 200 212 - 2.120 ms
+info: 2020-09-06T01:36:01.905Z Listening from Port 3000
+info: 2020-09-06T01:36:07.631Z Listening from Port 3000
+info: 2020-09-06T01:36:12.471Z Listening from Port 3000
+info: 2020-09-06T01:36:29.550Z Listening from Port 3000
+info: 2020-09-06T01:36:31.036Z Listening from Port 3000
+info: 2020-09-06T01:36:34.814Z Listening from Port 3000
+info: 2020-09-06T01:36:51.317Z Listening from Port 3000
+info: 2020-09-06T01:36:54.608Z Listening from Port 3000
+info: 2020-09-06T01:36:57.021Z Listening from Port 3000
+info: 2020-09-06T01:37:01.761Z Listening from Port 3000
+info: 2020-09-06T01:37:21.779Z Producto agregado a la coleccion productos {"title":"JUan","price":5000,"moneda":"USD","id":"37924fb8-8c21-44d2-ab95-fbfc172dcdd5"}
+info: 2020-09-06T01:37:21.784Z ::1 - POST /products/ HTTP/1.1 201 88 - 6.746 ms
+info: 2020-09-06T01:37:50.221Z Listening from Port 3000
+info: 2020-09-06T01:37:54.698Z Listening from Port 3000
+info: 2020-09-06T01:38:02.105Z Listening from Port 3000
+info: 2020-09-06T01:38:15.482Z Listening from Port 3000
+info: 2020-09-06T01:38:17.862Z Listening from Port 3000
+info: 2020-09-06T01:38:27.930Z Listening from Port 3000
+info: 2020-09-06T01:38:28.981Z Listening from Port 3000
+info: 2020-09-06T01:38:34.903Z Listening from Port 3000
+info: 2020-09-06T01:38:37.112Z Listening from Port 3000
+info: 2020-09-06T01:38:39.034Z Listening from Port 3000
+info: 2020-09-06T01:38:40.712Z Listening from Port 3000
+info: 2020-09-06T01:38:45.418Z Listening from Port 3000
+info: 2020-09-06T01:38:47.257Z Listening from Port 3000
+info: 2020-09-06T01:38:48.753Z Listening from Port 3000
+info: 2020-09-06T01:38:50.762Z Listening from Port 3000
+info: 2020-09-06T01:39:03.757Z Listening from Port 3000
+info: 2020-09-06T01:39:48.846Z Listening from Port 3000
+info: 2020-09-06T01:39:50.272Z Listening from Port 3000
+info: 2020-09-06T01:39:55.968Z Listening from Port 3000
+info: 2020-09-06T01:39:57.921Z Listening from Port 3000
+info: 2020-09-06T01:39:59.641Z Listening from Port 3000
+info: 2020-09-06T01:40:05.906Z Listening from Port 3000
+info: 2020-09-06T01:40:07.512Z Listening from Port 3000
+info: 2020-09-06T01:40:10.104Z Listening from Port 3000
+info: 2020-09-06T01:40:26.078Z Listening from Port 3000
+info: 2020-09-06T01:40:28.989Z Listening from Port 3000
+info: 2020-09-06T01:40:39.562Z Listening from Port 3000
+info: 2020-09-06T01:40:54.687Z Listening from Port 3000
+info: 2020-09-06T01:41:39.732Z Listening from Port 3000
+info: 2020-09-06T01:41:41.312Z Listening from Port 3000
+info: 2020-09-06T01:41:42.912Z Listening from Port 3000
+info: 2020-09-06T01:41:47.495Z Listening from Port 3000
+info: 2020-09-06T01:41:48.682Z Listening from Port 3000
+info: 2020-09-06T01:41:54.351Z Listening from Port 3000
+info: 2020-09-06T01:41:57.245Z Listening from Port 3000
+info: 2020-09-06T01:42:09.612Z Listening from Port 3000
+info: 2020-09-06T01:42:12.616Z Listening from Port 3000
+info: 2020-09-06T01:42:13.624Z Listening from Port 3000
+info: 2020-09-06T01:42:17.378Z Listening from Port 3000
+info: 2020-09-06T01:42:22.399Z Listening from Port 3000
+info: 2020-09-06T01:42:25.763Z Listening from Port 3000
+info: 2020-09-06T01:42:32.114Z Listening from Port 3000
+info: 2020-09-06T01:42:38.031Z Listening from Port 3000
+warn: 2020-09-06T01:46:24.135Z The next product dont pass the validation {"title":"Juan Perez","price":5000.12,"moneda":"USsD"}
+info: 2020-09-06T01:46:24.138Z ::1 - PUT /products/7f53d308-5492-48e9-80c5-47bbc5441ff6 HTTP/1.1 400 88 - 10.632 ms
+warn: 2020-09-06T01:46:44.203Z The next product dont pass the validation {"title":"Juan Perez","price":5000.12,"moneda":"USsD"}
+info: 2020-09-06T01:46:44.204Z ::1 - PUT /products/7f53d308-5492-48e9-80c5-47bbc5441ff6 HTTP/1.1 400 88 - 1.439 ms
+warn: 2020-09-06T01:47:29.213Z The next product dont pass the validation {"title":"Juan","price":5000,"moneda":"USDs"}
+info: 2020-09-06T01:47:29.214Z ::1 - POST /products/ HTTP/1.1 400 88 - 1.548 ms
+info: 2020-09-06T01:47:40.262Z Producto agregado a la coleccion productos {"title":"Juan","price":5000,"moneda":"USD","id":"d841bbc3-475d-4eb2-9588-52c963c1e526"}
+info: 2020-09-06T01:47:40.264Z ::1 - POST /products/ HTTP/1.1 201 88 - 1.883 ms
