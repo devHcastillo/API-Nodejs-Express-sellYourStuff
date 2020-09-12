@@ -3,8 +3,11 @@ const products = [
     { id: "123124", title: "Acer Predator Helios", price: 1200, moneda: "USD" },
     { id: "123132", title: "Note Pro 8", price: 300, moneda: "USD" },
   ];
+  
+const users = [];
 
   module.exports = {
-      products
+      products,
+      users
   }
   
