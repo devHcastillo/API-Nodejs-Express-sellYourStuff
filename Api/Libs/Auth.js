@@ -1,31 +1,37 @@
 const _ = require('underscore');
 const logger = require('../../Utils/Logger');
-const users = require('../../Database').users
 const bcrypt = require('bcrypt');
 const { error } = require('winston');
 const passportJWT = require('passport-jwt')
 const config = require('../../Config')
+
+const UserController = require('../Resources/Users/Users.controller')
 let jwtOptions = {
     secretOrKey: config.jwt.secreto,
     jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken()
 }
 
 module.exports = new passportJWT.Strategy(jwtOptions,(jwtPayLoad, next) =>{
-     
-    let indice =_.findIndex(users, (user) => {
-        return user.id == jwtPayLoad.id
-    })
 
-    if(indice === -1){
-        logger.info(`Username con id ${jwtPayLoad.id} no existe.JWT NO VALIDO`)
-        next(null,false);
-     }else{
-         logger.info(`El usuario ${users[indice].username} sumistrito un token valido`)
-         next(null,{
-             username: users[indice].username,
-             id: users[indice].id 
-         })
-     }
+
+    UserController.getUser({id:jwtPayLoad.id})
+        .then(user => {
+            if(!user){
+                logger.info(`Username con id ${jwtPayLoad.id} no existe.JWT NO VALIDO`)
+                next(null, false)
+                return
+            }
+            logger.info(`El usuario ${user.username} sumistrito un token valido`)
+            next(null,{
+                username: user.username,
+                id: user.id 
+            })
+        })
+        .catch(error => {
+            logger.info(`Ocurrio un error al validar token`,error)
+            next(error,false)
+        })
+
 })
 
 
