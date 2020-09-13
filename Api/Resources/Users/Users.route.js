@@ -7,6 +7,11 @@ const bcrytp = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../../../Config");
 const UserController = require("./Users.controller");
+const processErrors = require("../../Libs/errorHandler").processErrors;
+const {
+  DatosDeUsuarioYaEnUso,
+  CredencialesIncorrectas,
+} = require("./Users.error");
 
 const transformarAlowercase = (req, res, next) => {
   req.body.username && (req.body.username = req.body.username.toLowerCase());
@@ -14,92 +19,61 @@ const transformarAlowercase = (req, res, next) => {
   next();
 };
 
-usersRouter.get("/", (req, res) => {
-  UserController.getUsers()
-    .then((users) => {
+usersRouter.get(
+  "/",
+  processErrors((req, res) => {
+    return UserController.getUsers().then((users) => {
       res.json(users);
-    })
-    .catch((err) => {
-      Logger.error(`Error al obtener todos los usuarios`, err);
-      res.sendStatus(500);
     });
-});
+  })
+);
 
-usersRouter.post("/", [userValidate, transformarAlowercase], (req, res) => {
-  let newUser = req.body;
+usersRouter.post(
+  "/",
+  [userValidate, transformarAlowercase],
+  processErrors((req, res) => {
+    let newUser = req.body;
 
-  UserController.userExist(newUser.username, newUser.email)
-    .then((userexist) => {
-      if (userexist) {
-        Logger.warn(
-          `Email [${newUser.email}] o username [${newUser.username}] ya existe`
-        );
-        res.status(409).send("El email o usuario ya estan en eso");
-        return;
-      }
-     // console.log(newUser.password)
-
-      bcrytp.hash(newUser.password, 10, (err, hashed) => {
-        if (err) {
-          Logger.error(`Error al hacer hash de la contrasena`, err);
-          res, status(500).send("Error procesando creacion del usuario");
-          return;
+    return UserController.userExist(newUser.username, newUser.email)
+      .then((userexist) => {
+        if (userexist) {
+          Logger.warn(
+            `Email [${newUser.email}] o username [${newUser.username}] ya existe`
+          );
+          throw new DatosDeUsuarioYaEnUso();
         }
-        UserController.createUser(newUser, hashed)
-          .then((user) => {
-            //console.log(hashed)
-            res.status(201).send("Creacion exitosa");
-          })
-          .catch((err) => {
-            Logger.error(`Error al crear usuario`, err);
-            res, status(500).send("Error procesando creacion del usuario");
-          });
+        return bcrytp.hash(newUser.password, 10);
+      })
+      .then((hashed) => {
+        return UserController.createUser(newUser, hashed).then((user) => {
+          res.status(201).send("Creacion exitosa");
+        });
       });
-    })
-    .catch((err) => {
-      Logger.error(
-        `Ocurrio un error al tratar de verificar el email [${newUser.email}] o username [${newUser.username}]`
-      );
-      res.status(500).send("Ocurrio un error al crear usuario");
-    });
-});
+  })
+);
 
 usersRouter.post(
   "/login",
   [loginValidate, transformarAlowercase],
-  async (req, res) => {
+  processErrors(async (req, res) => {
     let userNotAuteticate = req.body;
     let userRegister;
 
-    try {
-      userRegister = await UserController.getUser({
-        username: userNotAuteticate.username,
-      });
-    } catch (error) {
-      Logger.error(
-        `Error al tratar de determinar si el usuario [${userNotAuteticate.username}] ya existe`,
-        err
-      );
-      res.status(500).send("Ocurrio un error al hacer login");
-      return;
-    }
+    userRegister = await UserController.getUser({
+      username: userNotAuteticate.username,
+    });
 
     if (!userRegister) {
       Logger.error(`usuario [${userNotAuteticate.username}] no registrado `);
-      res.status(400).send("Credenciales incorrectas. verificar");
-      return;
+      throw new CredencialesIncorrectas();
     }
 
     let constrasenaCorrecta;
 
-    try {
-      constrasenaCorrecta = await bcrytp.compare(userNotAuteticate.password, userRegister.password);
-    } catch (error) {
-      Logger.error(`Error al tratar de verificar contrasena`,error);
-      res.status(500).send("Error ocurrio en el proceso de login");
-      return
-    }
-
+    constrasenaCorrecta = await bcrytp.compare(
+      userNotAuteticate.password,
+      userRegister.password
+    );
 
     if (constrasenaCorrecta) {
       //generar token
@@ -112,9 +86,9 @@ usersRouter.post(
       Logger.info(
         `Usuario ${userNotAuteticate.username} no completo autenticacion. contrasena incorrecta`
       );
-      res.status(400).send("Error en las credenciales del usuario");
+      throw new CredencialesIncorrectas();
     }
-  }
+  })
 );
 
 module.exports = usersRouter;
