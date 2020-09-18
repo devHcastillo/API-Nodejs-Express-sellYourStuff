@@ -8,7 +8,7 @@ exports.processErrors = (fn) => {
 };
 
 exports.processErrorsDB = (err, req, res, next) => {
-  if (err instanceof mongoose.Error || err.name === "MongoError") {
+  if (err instanceof mongoose.Error || err.name === "MongoError") { 
     logger.error(`Ocurrio un error relacionado a mongoose.`, err);
     err.message =
       "Error relacionado a la base de datos ocurrio inesperadamente. Para ayuda contacte con dev.hcastillo@gmail.com";

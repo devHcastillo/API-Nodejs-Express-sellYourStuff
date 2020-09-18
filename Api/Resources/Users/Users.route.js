@@ -46,7 +46,7 @@ usersRouter.post(
       })
       .then((hashed) => {
         return UserController.createUser(newUser, hashed).then((user) => {
-          res.status(201).send("Creacion exitosa");
+          res.status(201).send("Usuario creado exitosamente.");
         });
       });
   })

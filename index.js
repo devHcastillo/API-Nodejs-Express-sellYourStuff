@@ -45,6 +45,11 @@ if (config.ambiente === "prod") {
 }
 console.log(config);
 
-app.listen(config.port, () => {
+const server = app.listen(config.port, () => {
   Logger.info(`Listening from Port ${config.port}`);
 });
+
+module.exports = {
+  app,
+  server
+}
